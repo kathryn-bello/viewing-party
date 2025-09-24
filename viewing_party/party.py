@@ -62,6 +62,29 @@ def get_most_watched_genre(user_data):
 # -----------------------------------------
 # ------------- WAVE 4 --------------------
 # -----------------------------------------
+def get_available_recs(user_data):
+    subscriptions = set(user_data["subscriptions"])
+    user_list = user_data["watched"]
+    friends_list = user_data["friends"]
+    user_set = set()
+    recommended_set = set()
+    recommended = []
+    
+    for movie in user_list:
+        user_set.add(movie['title'])
+    print(f"\n\nUser's watched movie titles: {user_set}")
+    print(f"\nUser's subscriptions: {subscriptions}")
+        
+    for friend in friends_list:
+        for movie in friend['watched']:
+            if movie['host'] in subscriptions:
+                movie_title = movie['title']
+                if movie_title not in user_set and movie_title not in recommended_set:
+                    recommended.append(movie)
+                    recommended_set.add(movie_title)
+        print(f"\nFriend's watched movie: {movie}")
+    print(f"\nRecommended: {recommended}")
+    return recommended
 
 # -----------------------------------------
 # ------------- WAVE 5 --------------------
