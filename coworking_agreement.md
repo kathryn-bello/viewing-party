@@ -44,5 +44,5 @@ My ideal co-working agreement would be: 1) Coming up with a deadline for the pro
 
 
 ## Signatures
-__Anaiah 💕____________ _______________
+__Anaiah 💕____________ Kathryn Bello 🐱_______________
 Date: _9/22/25________
