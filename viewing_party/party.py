@@ -92,7 +92,6 @@ def get_unique_watched(user_data):
         if movie not in friend_watched:
             user_unique_watched.append(movie)
 
-    
     return user_unique_watched    
 
 def get_friends_unique_watched(user_data):
@@ -119,7 +118,6 @@ def get_available_recs(user_data):
     user_list = user_data["watched"]
     friends_list = user_data["friends"]
 
-    # check if subscriptions key exists
     if "subscriptions" not in user_data or not user_data["subscriptions"]:
         subscriptions = set([])
     else:
@@ -137,7 +135,6 @@ def get_available_recs(user_data):
             for movie in friend['watched']:
                 if movie['host'] in subscriptions:
                     movie_title = movie['title']
-                    # check if user hasn't watched movie and we didn't add it already
                     if movie_title not in user_set and movie_title not in recommended_set:
                         recommended.append(movie)
                         recommended_set.add(movie_title)
@@ -166,11 +163,9 @@ def get_rec_from_favorites(user_data):
     friends_list = user_data["friends"]
     favorites_list = user_data["favorites"]
 
-    # if empty favorites list -> return empty recommneded list
     if not favorites_list:
         return recommended
     else:
-        # if empty friends list -> return favorites list
         if not friends_list:
             recommended = list(favorites_list)
             return recommended
@@ -181,7 +176,6 @@ def get_rec_from_favorites(user_data):
 
         for movie in favorites_list:
             movie_title = movie['title']
-            # check if friends have not watched movie and we didn't add it already
             if movie_title not in friends_set and movie_title not in recommended_set:
                 recommended.append(movie)
                 recommended_set.add(movie_title)
