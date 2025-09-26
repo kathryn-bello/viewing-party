@@ -1,8 +1,10 @@
 # ------------- WAVE 1 --------------------
 
-def create_movie(title, genre, rating):
-    pass
-
+def create_movie(movie_title, genre, rating):
+    if movie_title == None or genre == None or rating == None:
+        return None
+    movie = {"title":movie_title, "genre":genre, "rating":rating}
+    return movie
 # -----------------------------------------
 # ------------- WAVE 2 --------------------
 # -----------------------------------------
