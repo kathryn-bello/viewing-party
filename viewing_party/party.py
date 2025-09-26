@@ -9,12 +9,12 @@ def create_movie(movie_title, genre, rating):
 def add_to_watched(user_data, movie):
     if movie["title"] not in user_data["watched"]:
         user_data["watched"].append(movie)
-        return user_data
+    return user_data
     
 def add_to_watchlist(user_data, movie):
     if movie["title"] not in user_data["watchlist"]:
         user_data["watchlist"].append(movie)
-        return user_data
+    return user_data
     
 def watch_movie(user_data, movie_title):
     for movie in user_data["watchlist"]:
@@ -58,7 +58,6 @@ def get_most_watched_genre(user_data):
             return None
         
         for movie in movies:
-            # check if genre key exists
             if 'genre' in movie:
                 genre = movie["genre"]
                 if genre not in genre_count:
