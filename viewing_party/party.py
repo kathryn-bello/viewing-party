@@ -5,6 +5,11 @@ def create_movie(movie_title, genre, rating):
         return None
     movie = {"title":movie_title, "genre":genre, "rating":rating}
     return movie
+
+def add_to_watched(user_data, movie):
+    if movie["title"] not in user_data["watched"]:
+        user_data["watched"].append(movie)
+        return user_data
 # -----------------------------------------
 # ------------- WAVE 2 --------------------
 # -----------------------------------------
