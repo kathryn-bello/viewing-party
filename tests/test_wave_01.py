@@ -178,6 +178,10 @@ def test_moves_movie_from_watchlist_to_watched():
         ],
         "watched": [FANTASY_2]
     }
+    expected_result = {
+        "watchlist": [FANTASY_1],
+        "watched": [FANTASY_2, movie_to_watch]
+    }
 
     # Act
     updated_data = watch_movie(janes_data, movie_to_watch["title"])
@@ -187,7 +191,7 @@ def test_moves_movie_from_watchlist_to_watched():
     assert len(updated_data["watched"]) == 2
 
     # *******************************************************************************************
-    assert updated_data["watched"][1]["title"] == movie_to_watch["title"]
+    assert updated_data == expected_result
     # *******************************************************************************************
 
 # @pytest.mark.skip()
@@ -207,3 +211,4 @@ def test_does_nothing_if_movie_not_in_watchlist():
     assert len(updated_data["watched"]) == 1
     assert movie_to_watch not in updated_data["watchlist"]
     assert movie_to_watch not in updated_data["watched"]
+ 
