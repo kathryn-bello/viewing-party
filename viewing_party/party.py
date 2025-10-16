@@ -59,12 +59,8 @@ def get_most_watched_genre(user_data):
 # ------------- WAVE 3 --------------------
 # -----------------------------------------
 def get_unique_watched(user_data):
-    friend_watched_titles = set()
+    friend_watched_titles = get_friends_movie_titles(user_data)
     user_unique_watched_movies = []
-
-    for friend in user_data['friends']:
-        for movie in friend["watched"]:
-            friend_watched_titles.add(movie["title"])
 
     for movie in user_data["watched"]:
         if movie["title"] not in friend_watched_titles:
@@ -73,23 +69,16 @@ def get_unique_watched(user_data):
     return user_unique_watched_movies
 
 def get_friends_unique_watched(user_data):
-    user_watched_titles = {
-        movie["title"] for movie in user_data["watched"]
-    }
-    friends_unique_watched_movies = []
+    user_watched_titles = get_movie_titles(user_data["watched"])
+    friends_movies = get_friends_movies(user_data)
     friends_watched_titles = set()
-    friends_watched_movies = {}
+    friends_unique_watched_movies = []
 
-    for friend in user_data["friends"]:
-        for movie in friend["watched"]:
-            title = movie["title"]
-            if title not in friends_watched_titles:
-                friends_watched_titles.add(title)
-                friends_watched_movies[title] = movie
-
-    for title in friends_watched_titles:
-        if title not in user_watched_titles:
-            friends_unique_watched_movies.append(friends_watched_movies[title])
+    for movie in friends_movies:
+        title = movie["title"]
+        if title not in friends_watched_titles and title not in user_watched_titles:
+            friends_watched_titles.add(title)
+            friends_unique_watched_movies.append(movie)
 
     return friends_unique_watched_movies
 
@@ -102,9 +91,7 @@ def get_available_recs(user_data):
     
     friends_movie_list = get_friends_unique_watched(user_data)
     subscriptions = set(user_data["subscriptions"])
-    user_watched_titles = {
-        movie['title'] for movie in user_data["watched"]
-    }
+    user_watched_titles = get_movie_titles(user_data["watched"])
     recommended_movies = []
     recommended_set = set()
     
@@ -133,10 +120,7 @@ def get_rec_from_favorites(user_data):
         return []
     
     # getting all the movie titles friends have watched
-    friends_movie_titles = set()
-    for friend in user_data["friends"]:
-        for movie in friend["watched"]:
-            friends_movie_titles.add(movie['title'])
+    friends_movie_titles = get_friends_movie_titles(user_data)
     
     recommended_movies = []
     user_watched = set()
@@ -148,3 +132,23 @@ def get_rec_from_favorites(user_data):
             user_watched.add(movie_title)
 
     return recommended_movies
+
+# -----------------------------------------
+# ---------- HELPER FUNCTIONS -------------
+# -----------------------------------------
+# To extract movie titles
+def get_movie_titles(movies_list):
+    return { movie["title"] for movie in movies_list }
+
+# To extract friends movies from user_data
+def get_friends_movies(user_data):
+    friends_movies = []
+    for friend in user_data["friends"]:
+        for movie in friend["watched"]:
+            friends_movies.append(movie)
+    return friends_movies
+
+# To extract titles from friends movies
+def get_friends_movie_titles(user_data):
+    friends_movies = get_friends_movies(user_data)
+    return get_movie_titles(friends_movies)
