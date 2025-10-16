@@ -1,10 +1,10 @@
 # ------------- WAVE 1 --------------------
 
 def create_movie(movie_title, genre, rating):
-    if movie_title == None or genre == None or rating == None:
+    if not movie_title or not genre or not rating:
         return None
-    movie = {"title":movie_title, "genre":genre, "rating":rating}
-    return movie
+    return {"title":movie_title, "genre":genre, "rating":rating}
+
 
 def add_to_watched(user_data, movie):
     if movie["title"] not in user_data["watched"]:
